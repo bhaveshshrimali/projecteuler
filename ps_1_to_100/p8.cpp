@@ -1,50 +1,76 @@
+// In a 1000-digit number, 
 // find the adjacent 13 digits that have the maximum product
+// print the product
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <fstream>
 using namespace std; 
 
-vector<int> get_digits(long long num){
-    long long num_temp = num;
-    int num_digits = 1; 
-    while (num/10 > 0)
-    {
-        num_digits++;
-        num /= 10;
-    }
-    cout << "The number of digits in the given number is: " << num_digits << endl; 
-    vector<int> digits(num_digits);
-    for (int i=0; i<num_digits; i++){
-        digits[i] = num_temp % 10; 
-        num_temp /= 10; 
-    }
-    return digits; 
-}
+// vector<int> get_digits(long long num){
+//     long long num_temp = num;
+//     int num_digits = 1; 
+//     while (num/10 > 0)
+//     {
+//         num_digits++;
+//         num /= 10;
+//     }
+//     cout << "The number of digits in the given number is: " << num_digits << endl; 
+//     vector<int> digits(num_digits);
+//     for (int i=0; i<num_digits; i++){
+//         digits[i] = num_temp % 10; 
+//         num_temp /= 10; 
+//     }
+//     return digits; 
+// }
 
 int get_max_product(vector<int> digits_of_num){
     
-    vector<int> product_digits(digits_of_num.size()-12);
-    for (int i=0; i < digits_of_num.size()-13; i++) {
+    // vector<int> product_digits(digits_of_num.size()-12);
+    int max = 1;
+    for (int i=0; i <= digits_of_num.size()-13; i++) {
         int prod = 1; 
         for (int j=i; j < i+13; j++){
             prod *= digits_of_num[j];
         }
-        product_digits[i] = prod; 
+        if (prod >= max){
+            max = prod;
+        }
+        // product_digits[i] = prod; 
+
 
     }
-    int max = product_digits[0]; 
-    for (int j=1; j<product_digits.size(); j++){
-        if (product_digits[j] > max){
-            max = product_digits[j];
-        }
-    }
+    // int max = product_digits[0]; 
+    // for (int k=1; k<product_digits.size(); k++){
+    //     if (product_digits[k] > max){
+    //         max = product_digits[k];
+    //     }
+    // }
     return max; 
 }
 
 int main() {
-
-    long long num_a = 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450;
+// you don't really need the number, just the digits; 
+// it treats the number in the file as characters
+     ifstream inpFile;
+     vector<int> digits(1000); 
+     char x;  
+     inpFile.open("p8_data.txt");
+     
+     if (!inpFile){
+         cerr << "Unable to open the requested file" << endl;
+     }
+     int sum = 0;
+     while (inpFile >> x){
+        digits[sum] = (int)x - '0';
+        // cout << digits[sum] << " ";
+        sum++;
+     }
+     inpFile.close();
+    //  cout << "The program ended happily with sum = " << digits[0] << endl; 
+     int max_product = get_max_product(digits);
+     cout << max_product << endl;
+     return 1;
     // cin >> num_a;  
-    vector<int> digits = get_digits(num_a);
-
+    // vector<int> digits = get_digits(num_a);
 }
