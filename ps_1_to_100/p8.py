@@ -20,7 +20,6 @@ def get_max_product(arr):
     max_prod = []
     # print(arr.size-13+)
     for i in range(len(arr) - 13):
-        # print(arr[i+13])
         max_prod.append(np.prod(arr[i:i+13]))
     return max(max_prod)
 
