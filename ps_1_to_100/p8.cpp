@@ -7,45 +7,22 @@
 #include <fstream>
 using namespace std; 
 
-// vector<int> get_digits(long long num){
-//     long long num_temp = num;
-//     int num_digits = 1; 
-//     while (num/10 > 0)
-//     {
-//         num_digits++;
-//         num /= 10;
-//     }
-//     cout << "The number of digits in the given number is: " << num_digits << endl; 
-//     vector<int> digits(num_digits);
-//     for (int i=0; i<num_digits; i++){
-//         digits[i] = num_temp % 10; 
-//         num_temp /= 10; 
-//     }
-//     return digits; 
-// }
-
-int get_max_product(vector<int> digits_of_num){
+int get_max_product(vector<long long> digits_of_num){
     
     // vector<int> product_digits(digits_of_num.size()-12);
-    int max = 1;
-    for (int i=0; i <= digits_of_num.size()-13; i++) {
-        int prod = 1; 
-        for (int j=i; j < i+13; j++){
+    long long max = 1;
+    int num_digits = 13; 
+    cout << digits_of_num.size() << endl;
+    for (int i=0; i <= digits_of_num.size()-num_digits; i++) {
+        long long prod = 1; 
+        for (int j=i; j < i+num_digits; j++){
             prod *= digits_of_num[j];
+        // cout << j << endl;
         }
-        if (prod >= max){
+        if (prod > max){
             max = prod;
         }
-        // product_digits[i] = prod; 
-
-
     }
-    // int max = product_digits[0]; 
-    // for (int k=1; k<product_digits.size(); k++){
-    //     if (product_digits[k] > max){
-    //         max = product_digits[k];
-    //     }
-    // }
     return max; 
 }
 
@@ -53,7 +30,8 @@ int main() {
 // you don't really need the number, just the digits; 
 // it treats the number in the file as characters
      ifstream inpFile;
-     vector<int> digits(1000); 
+     int num_digits = 1000;
+     vector<long long> digits(num_digits); 
      char x;  
      inpFile.open("p8_data.txt");
      
@@ -62,15 +40,15 @@ int main() {
      }
      int sum = 0;
      while (inpFile >> x){
-        digits[sum] = (int)x - '0';
-        // cout << digits[sum] << " ";
+        digits[sum] = (long long)x - '0';
+        cout << digits[sum] << " ";
         sum++;
      }
      inpFile.close();
-    //  cout << "The program ended happily with sum = " << digits[0] << endl; 
-     int max_product = get_max_product(digits);
+     cout << "\nThe program ended happily with ending index = " << sum << endl; 
+     long long max_product;
+     max_product = get_max_product(digits);
      cout << max_product << endl;
      return 1;
-    // cin >> num_a;  
-    // vector<int> digits = get_digits(num_a);
+
 }

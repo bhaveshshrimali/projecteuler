@@ -5,6 +5,7 @@
 import numpy as np 
 import os 
 from copy import deepcopy
+import operator
 
 def extract_digits(num):
     digits = []
@@ -18,8 +19,9 @@ def extract_digits(num):
 def get_max_product(arr):
     max_prod = []
     # print(arr.size-13+)
-    for i in range(arr.size - 12):
-        max_prod.append(arr[i:i+13].prod())
+    for i in range(len(arr) - 13):
+        # print(arr[i+13])
+        max_prod.append(np.prod(arr[i:i+13]))
     return max(max_prod)
 
 with open('p8_data.txt') as rfil:
@@ -33,5 +35,5 @@ digits = []
 for n in nums:
     digits.extend(extract_digits(n))
 
-digits = np.array(digits)
+# digits = np.array(digits)
 print(get_max_product(digits))
