@@ -11,20 +11,21 @@ bool is_prime(int n){
     if (n == 1){
         return false;
     }
-    else if (n==2 or n == 3){
-        return true;
+    else if (n % 2 == 0 and n != 2){
+        return  false;
     }
-    for(int i=n/2; i >= 2; i--){
+    for(int i=3; i <= sqrt(n); i+=2){
         if (n%i==0){
             return false;
         }
     }
+
     return true;
 }
 
 int main(){
     int num = 1;
-    int sum_prime = 0; 
+    long sum_prime = 0; 
     int req_primes = 2000000;
     while ( num <= req_primes)
     {
