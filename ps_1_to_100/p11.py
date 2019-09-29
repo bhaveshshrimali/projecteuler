@@ -8,6 +8,7 @@ def max_product(grid_data):
     num_digits = 4
     max_prod_vertical = 1
     max_prod_horizontal = 1
+    max_prod_diagonal = 1
     # vertical and horizontal
     for i in range(grid_data.shape[0]-num_digits):
         column_prod = max(max(np.prod(grid_data[i:i+num_digits],axis=0)),max_prod_vertical)
