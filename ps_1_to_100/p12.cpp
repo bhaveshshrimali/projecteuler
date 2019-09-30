@@ -11,27 +11,46 @@ long num_sum(long num){
     return result_sum;
 }
 
-bool is_desired_triangular(long triang_num){
+bool is_desired_triangular(long triang_num, int num_divisors_required = 5){
 
     // * one way could be to check prime factors 
-    // * then calculate total prime factors
-    // * then calculate product till the the second last prime factor 
-    // * this would potentially be shorter than running brute force n/2
-    // * every time 
+    // * p1^e1 x p2^e2 x ... 
+    // * the total number of prime factors is p1, ... pn 
+    // * the total number of factors is (1+e1) * (1+e2) * ...  
 
-    int num_facs = 2; // 1 and `triang_num` are defacto
-    bool has_num_div = false;
-    for (long i=2; i <= triang_num/2; i++){
-        if (triang_num % i==0){
-            num_facs++;
-            // cout << "i,  " << endl;
-        }
-        if (num_facs > 500){
-            has_num_div=true;
-        }
+    // Do a prime sieve 
+    int num_factors = 0; 
+    int num_divisors = 0;
+    while (triang_num % 2 == 0){
+        num_factors++;
+        triang_num /= 2;
     }
-    return has_num_div;
+    num_divisors = 1+num_factors;
+
+    for (long i=3; i <= sqrt(triang_num); i+=2){
+        num_factors = 0;
+        int j = sqrt(triang_num);
+        if (j * j == triang_num  )
+        {
+            num_factors++;
+        }
+        while (triang_num % i == 0)
+        {
+            j *= j;
+            num_factors++;
+            triang_num /= i;            
+        }
+
+        num_divisors *= (1+num_factors);
+    }
+    if (num_divisors >= num_divisors_required){
+        return true;
+    }
+    else {
+        return false;
+    }
 }
+
 
 int main(){
     long triangular_num = 1;
@@ -42,8 +61,12 @@ int main(){
         triangular_num = num_sum(nums); 
         num_is_triangular = is_desired_triangular(triangular_num); 
         nums++;
+        if (nums == 7){
+            cout << "For 5 nos " << num_sum(nums) << " and the boolean indicator is " << is_desired_triangular(num_sum(nums)) << endl;
+        }
 
     }
+    cout << triangular_num << endl;
     
     return 0; 
 }
