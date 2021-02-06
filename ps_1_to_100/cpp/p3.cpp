@@ -19,6 +19,7 @@ long long larg_prime(long long n){
     // At this point, the only corner case that remains is that 
     // `n` is itself a prime, 
     // how to check if `n` itself is prime ?
+    
 
     if (n > 2) {
         largest_prime = n;
